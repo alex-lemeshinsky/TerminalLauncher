@@ -146,6 +146,8 @@ are injected, so tests never touch the real App Group or the app.
   `tl ./ls`.
 - When an `add` makes the list longer than 10 items, also print:
   `Note: the widget shows up to 10 folders; N are hidden.`
+  N is the same number as the large widget's `+N more` row (section 5), so
+  with 11 items N is 2.
 - After every successful `add` or `rm`, run the widget reload: open
   `tlaunch://reload` with `NSWorkspace`, without bringing the app to the front
   (`activates = false`). If that fails, print this warning to stderr and still
