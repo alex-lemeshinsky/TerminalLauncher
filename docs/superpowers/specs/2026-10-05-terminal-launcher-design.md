@@ -39,7 +39,7 @@ folder, `tl .` adds it to the widget.
 - Swift Argument Parser (latest 1.x, via Swift Package Manager) for the CLI
 - Swift Testing (`@Test`) for unit tests
 - XcodeGen (`project.yml`) to generate the Xcode project; the `.xcodeproj` is not committed
-- Signing: the existing "Apple Development" identity, team `4DTV898H25`
+- Signing: the existing "Apple Development" identity, team `A5STTR22DU`
 
 ## 3. Architecture
 
@@ -56,12 +56,12 @@ tl add .  ──writes──▶  App Group container: paths.json  ◀──reads
 
 | Thing | Value |
 |---|---|
-| App Group | `4DTV898H25.com.alex.TerminalLauncher` (team-prefixed, so the CLI needs no provisioning profile) |
+| App Group | `A5STTR22DU.com.alex.TerminalLauncher` (team-prefixed, so the CLI needs no provisioning profile) |
 | App bundle ID | `com.alex.TerminalLauncher` |
 | Widget bundle ID | `com.alex.TerminalLauncher.PathsWidget` |
 | CLI signing identifier | `com.alex.TerminalLauncher.tl` |
 | URL scheme | `tlaunch` |
-| Data file | `~/Library/Group Containers/4DTV898H25.com.alex.TerminalLauncher/paths.json` |
+| Data file | `~/Library/Group Containers/A5STTR22DU.com.alex.TerminalLauncher/paths.json` |
 
 ### Units
 

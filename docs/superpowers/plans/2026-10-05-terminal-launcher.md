@@ -20,7 +20,7 @@ AppKit, Swift Argument Parser 1.x, Swift Testing, XcodeGen.
 ## Global Constraints
 
 - Deployment target macOS `27.0`. `SWIFT_VERSION` `6.0`, the Swift 6 language mode. The package uses `// swift-tools-version: 6.0` and `platforms: [.macOS("27.0")]`.
-- App Group: `4DTV898H25.com.alex.TerminalLauncher`. Team: `4DTV898H25`.
+- App Group: `A5STTR22DU.com.alex.TerminalLauncher`. Team: `A5STTR22DU`.
 - Bundle IDs and signing identifiers: app `com.alex.TerminalLauncher`, widget `com.alex.TerminalLauncher.PathsWidget`, CLI `com.alex.TerminalLauncher.tl`.
 - URL scheme `tlaunch`. Data file `paths.json`, format `version` `1`.
 - Only the CLI writes `paths.json`. The app and the widget never write it.
@@ -75,12 +75,12 @@ git add .gitignore && git commit -m "chore: add gitignore"
 
 - [ ] **Step 3: Write the spike project in `spike/`**
 
-Use the same shape and signing as Task 8's `project.yml`: team `4DTV898H25`,
+Use the same shape and signing as Task 8's `project.yml`: team `A5STTR22DU`,
 `CODE_SIGN_STYLE: Automatic`, macOS 27.0. Three targets:
 
 - **`SpikeApp`** (application)
   - Bundle ID `com.alex.TerminalLauncher.Spike`, `LSUIElement` true.
-  - Entitlement: App Group `4DTV898H25.com.alex.TerminalLauncher` only, with no sandbox.
+  - Entitlement: App Group `A5STTR22DU.com.alex.TerminalLauncher` only, with no sandbox.
   - `main.swift` just runs `NSApplication.shared.run()`.
   - Embeds the widget and copies `spikecli` into `Contents/MacOS`.
 - **`SpikeWidget`** (app-extension)
@@ -105,7 +105,7 @@ record what finally worked.
 - [ ] **Step 5: Verify signatures**
 
 Run: `codesign -d --entitlements - build/Build/Products/Release/SpikeApp.app/Contents/MacOS/spikecli && codesign --verify --deep --strict build/Build/Products/Release/SpikeApp.app && echo OK`
-Expected: the entitlements show `4DTV898H25.com.alex.TerminalLauncher`, and the output ends with `OK`.
+Expected: the entitlements show `A5STTR22DU.com.alex.TerminalLauncher`, and the output ends with `OK`.
 
 - [ ] **Step 6: Install the spike app**
 
@@ -119,7 +119,7 @@ Terminal window**, not through the agent, because macOS attributes privacy
 prompts to the terminal that launched the tool. Ask them to report the output
 and whether a "would like to access data from other apps" dialog appeared.
 
-Pass: it prints a path under `~/Library/Group Containers/4DTV898H25.com.alex.TerminalLauncher/` and `written …`, and no dialog appears either time.
+Pass: it prints a path under `~/Library/Group Containers/A5STTR22DU.com.alex.TerminalLauncher/` and `written …`, and no dialog appears either time.
 
 - [ ] **Step 8: Q3 and Q2, widget gallery and widget reading (ask your human partner)**
 
@@ -141,7 +141,7 @@ Write `docs/superpowers/spikes/2026-10-05-app-group-findings.md` with:
 - [ ] **Step 10: Clean up**
 
 1. Ask your human partner to remove the spike widget from the desktop.
-2. Run: `rm -rf ~/Applications/SpikeApp.app spike && rm -f ~/Library/Group\ Containers/4DTV898H25.com.alex.TerminalLauncher/spike.txt`
+2. Run: `rm -rf ~/Applications/SpikeApp.app spike && rm -f ~/Library/Group\ Containers/A5STTR22DU.com.alex.TerminalLauncher/spike.txt`
 
 - [ ] **Step 11: Commit**
 
@@ -180,7 +180,7 @@ git commit -m "docs: record App Group spike findings"
     - cases: `unreadable(file: String, reason: String)`, `unsupportedVersion(file: String, found: Int)`, `containerUnavailable(groupID: String)`, `writeFailed(file: String, reason: String)`
     - `public var message: String`
   - `public struct PathStore: Sendable`:
-    - `static let appGroupID = "4DTV898H25.com.alex.TerminalLauncher"`
+    - `static let appGroupID = "A5STTR22DU.com.alex.TerminalLauncher"`
     - `static let fileName = "paths.json"`
     - `let fileURL: URL`
     - `init(directory: URL)`
@@ -598,7 +598,7 @@ Add:
 - `addEleventhPrintsNote`: seed 10 paths, add a new one → stdout `["Added ~/Documents", "Note: the widget shows up to 10 folders; 2 are hidden."]`.
 - `addWhenReloadFails`: reloader returns `false` → stdout `["Added ~/Documents"]`, stderr is the reload-failed line, exit 0.
 - `addWithCorruptFileDoesNotOverwrite`: the file contains `garbage` → stderr starts with `Error: couldn't read `, exit 1, and the file text is still `garbage`.
-- `addWhenContainerUnavailable`: `makeStore` throws `.containerUnavailable(groupID: PathStore.appGroupID)` → stderr `["Error: can't access App Group container 4DTV898H25.com.alex.TerminalLauncher"]`, exit 1.
+- `addWhenContainerUnavailable`: `makeStore` throws `.containerUnavailable(groupID: PathStore.appGroupID)` → stderr `["Error: can't access App Group container A5STTR22DU.com.alex.TerminalLauncher"]`, exit 1.
 
 Remove:
 - `removeByNumber`: seed `["/Users/alex/a", "/Users/alex/b", "/Users/alex/c"]`, `remove("2")` → stdout `["Removed ~/b"]`, 1 reload call.
@@ -731,7 +731,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "6.0"
-    DEVELOPMENT_TEAM: 4DTV898H25
+    DEVELOPMENT_TEAM: A5STTR22DU
     CODE_SIGN_STYLE: Automatic
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
@@ -788,7 +788,7 @@ schemes:
 - `CFBundleURLTypes`, containing one dict with `CFBundleURLName` `com.alex.TerminalLauncher` and `CFBundleURLSchemes` `[tlaunch]`
 
 Entitlements:
-- Both entitlements files contain only `com.apple.security.application-groups` = `[4DTV898H25.com.alex.TerminalLauncher]`.
+- Both entitlements files contain only `com.apple.security.application-groups` = `[A5STTR22DU.com.alex.TerminalLauncher]`.
 - Neither one enables the sandbox.
 
 - [ ] **Step 3: Write the app and CLI sources**
@@ -895,7 +895,7 @@ git commit -m "feat: add host app and embedded tl CLI targets"
 
 Entitlements:
 - `com.apple.security.app-sandbox` = `true`
-- `com.apple.security.application-groups` = `[4DTV898H25.com.alex.TerminalLauncher]`
+- `com.apple.security.application-groups` = `[A5STTR22DU.com.alex.TerminalLauncher]`
 
 - [ ] **Step 2: Write the widget**
 
