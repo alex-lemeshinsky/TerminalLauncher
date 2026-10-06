@@ -690,7 +690,7 @@ Expected: compilation fails.
   - `makeStore`: `PathStore.appGroup`
   - `reloader`: `WorkspaceReloader()`
   - `folderStatus`: `FolderStatus.of`
-  - `cwd`: `FileManager.default.currentDirectoryPath`
+  - `cwd`: `logicalCwd(pwd: $PWD, physical: FileManager.default.currentDirectoryPath, sameFile: sameFileOnDisk)` (see the final-review fix; getcwd alone resolves symlinks)
   - `home`: `PathDisplay.realHome`
   - `now`: `Date.init`
 
