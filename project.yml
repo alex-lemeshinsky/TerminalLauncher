@@ -21,6 +21,7 @@ targets:
     dependencies:
       - package: LauncherKit
         product: PathStore
+      - target: PathsWidget
       - target: tl
         embed: true
         codeSign: false          # keep tl's own signature and entitlements
@@ -31,6 +32,20 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.alex.TerminalLauncher
         INFOPLIST_FILE: App/Info.plist
         CODE_SIGN_ENTITLEMENTS: App/TerminalLauncher.entitlements
+  PathsWidget:
+    type: app-extension
+    platform: macOS
+    sources: [Widget]
+    dependencies:
+      - package: LauncherKit
+        product: PathStore
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.alex.TerminalLauncher.PathsWidget
+        INFOPLIST_FILE: Widget/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Widget/PathsWidget.entitlements
   tl:
     type: tool
     platform: macOS
