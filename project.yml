@@ -1,0 +1,70 @@
+name: TerminalLauncher
+options:
+  bundleIdPrefix: com.alex
+  deploymentTarget:
+    macOS: "27.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: A5STTR22DU
+    CODE_SIGN_STYLE: Automatic
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+packages:
+  LauncherKit:
+    path: Packages/LauncherKit
+targets:
+  TerminalLauncher:
+    type: application
+    platform: macOS
+    sources: [App]
+    dependencies:
+      - package: LauncherKit
+        product: PathStore
+      - target: PathsWidget
+      - target: tl
+        embed: true
+        codeSign: false          # keep tl's own signature and entitlements
+        copy:
+          destination: executables
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.alex.TerminalLauncher
+        INFOPLIST_FILE: App/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/TerminalLauncher.entitlements
+  PathsWidget:
+    type: app-extension
+    platform: macOS
+    sources: [Widget]
+    dependencies:
+      - package: LauncherKit
+        product: PathStore
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.alex.TerminalLauncher.PathsWidget
+        INFOPLIST_FILE: Widget/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Widget/PathsWidget.entitlements
+  tl:
+    type: tool
+    platform: macOS
+    sources: [CLI]
+    dependencies:
+      - package: LauncherKit
+        product: TLCommands
+    settings:
+      base:
+        PRODUCT_NAME: tl
+        PRODUCT_BUNDLE_IDENTIFIER: com.alex.TerminalLauncher.tl
+        GENERATE_INFOPLIST_FILE: YES
+        CREATE_INFOPLIST_SECTION_IN_BINARY: YES
+        CODE_SIGN_ENTITLEMENTS: CLI/tl.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+        OTHER_CODE_SIGN_FLAGS: "--identifier com.alex.TerminalLauncher.tl"
+        SKIP_INSTALL: YES
+schemes:
+  TerminalLauncher:
+    build:
+      targets:
+        TerminalLauncher: all
