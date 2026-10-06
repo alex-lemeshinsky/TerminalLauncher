@@ -18,7 +18,8 @@ public enum OpenOutcome: Equatable, Sendable {
             return nil
         case let .folderMissing(path):
             let shown = PathDisplay.abbreviated(path, home: home)
-            return "\(shown) no longer exists. Remove it with tl rm \"\(shown)\"."
+            let quoted = "'" + shown.replacingOccurrences(of: "'", with: "'\\''") + "'"
+            return "\(shown) no longer exists. Remove it with tl rm \(quoted)."
         case let .failed(message):
             return "Couldn't open Terminal: \(message)"
         }

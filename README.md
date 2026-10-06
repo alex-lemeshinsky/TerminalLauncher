@@ -37,8 +37,9 @@ The script does the following:
 4. Installs `TerminalLauncher.app` to `~/Applications`.
 5. Unregisters the copies in `build/` so `tlaunch://` links always reach the
    installed app.
-6. Links `~/.local/bin/tl` into the app bundle.
-7. Launches the app once, so macOS registers the URL scheme and the widget.
+6. Registers the installed copy with LaunchServices.
+7. Links `~/.local/bin/tl` into the app bundle.
+8. Launches the app once, so macOS registers the URL scheme and the widget.
 
 Re-run the script after every change. It's safe to run more than once.
 
@@ -65,7 +66,8 @@ Removed ~/old/thing
 
 Notes:
 - Paths are resolved against the current directory, and a leading `~` is
-  expanded. Symlinks are kept the way you typed them.
+  expanded. Symlinks are kept the way you typed them (or, for `tl .`, the way your shell
+  shows the current folder).
 - Command names win over folder names. To add a folder called `ls`, `rm` or `3`,
   write `tl ./ls`.
 - Errors go to stderr and exit with status 1. Running `tl` with no arguments
@@ -168,14 +170,15 @@ Use the full path `/usr/bin/log`, because in zsh `log` is a built-in command.
 
 ## Signing
 
-The team ID `A5STTR22DU` is hard-coded in four places:
+The team ID `A5STTR22DU` is hard-coded in these files:
 
 - `project.yml` (`DEVELOPMENT_TEAM`)
-- the App Group in `App/TerminalLauncher.entitlements`
-- the App Group in `Widget/PathsWidget.entitlements` and `CLI/tl.entitlements`
-- `PathStore.appGroupID` in `Packages/LauncherKit/Sources/PathStore/PathStore.swift`
+- `App/TerminalLauncher.entitlements` (App Group)
+- `Widget/PathsWidget.entitlements` (App Group)
+- `CLI/tl.entitlements` (App Group)
+- `Packages/LauncherKit/Sources/PathStore/PathStore.swift` (`PathStore.appGroupID`)
 
-To build under a different team, replace it in all four places. Your team ID is
+To build under a different team, replace it in all of these files. Your team ID is
 the **OU** field of your "Apple Development" certificate:
 
 ```bash

@@ -504,7 +504,8 @@ Tests:
 - `missingListFileMeansNotInList`: no file → `.notInList`.
 - `missingFolderAlerts`:
   - list `["/Users/alex/old/thing"]`, status `.missing` → `.folderMissing(path: "/Users/alex/old/thing")`
-  - `alertMessage(home: "/Users/alex") == "~/old/thing no longer exists. Remove it with tl rm \"~/old/thing\"."`
+  - `alertMessage(home: "/Users/alex") == "~/old/thing no longer exists. Remove it with tl rm '~/old/thing'."`
+  - `.folderMissing(path: "/Users/alex/it's $HOME \"x\"")` → `"~/it's $HOME \"x\" no longer exists. Remove it with tl rm '~/it'\\''s $HOME \"x\"'."` (single quotes, each `'` escaped as `'\''`)
 - `fileInsteadOfFolderAlerts`: status `.notFolder` → `.folderMissing(…)`.
 - `unreadableListIsIgnored`:
   - the file contains `garbage` → `.listUnreadable(message:)`, where the message starts with `couldn't read `
@@ -998,7 +999,7 @@ to report what the widget and Terminal show at each step.
 - [ ] **Step 2: Click opens Terminal.** The partner clicks that row → a new Terminal window opens, and `pwd` prints `/Users/alex/tl-e2e/a`.
 - [ ] **Step 3: Special characters.** `mkdir -p "$HOME/tl-e2e/My Folder & Co" && tl "$HOME/tl-e2e/My Folder & Co"`, then the partner clicks the row → `pwd` matches that path.
 - [ ] **Step 4: Remove.** `tl ls` lists both. `tl rm 1` prints `Removed ~/tl-e2e/My Folder & Co`, and the row disappears from the widget.
-- [ ] **Step 5: Deleted folder.** `mkdir ~/tl-e2e/gone && tl ~/tl-e2e/gone && rmdir ~/tl-e2e/gone`. The partner clicks its row → the alert reads `~/tl-e2e/gone no longer exists. Remove it with tl rm "~/tl-e2e/gone".` Then `tl rm "~/tl-e2e/gone"` succeeds.
+- [ ] **Step 5: Deleted folder.** `mkdir ~/tl-e2e/gone && tl ~/tl-e2e/gone && rmdir ~/tl-e2e/gone`. The partner clicks its row → the alert reads `~/tl-e2e/gone no longer exists. Remove it with tl rm '~/tl-e2e/gone'.` Then `tl rm '~/tl-e2e/gone'` succeeds.
 - [ ] **Step 6: The sandbox shows `~` paths.** The partner confirms the rows show `~/…`, not `/Users/alex/…` and not a `Library/Containers` path.
 - [ ] **Step 7: Arbitrary URL is ignored.** `open "tlaunch://open?path=/"` → no Terminal window and no alert.
 - [ ] **Step 8: Overflow.** `for i in {1..12}; do mkdir -p ~/tl-e2e/f$i && tl ~/tl-e2e/f$i; done`. The add that brings the list to 11 items (`f10`) prints the note with `2 are hidden`. The large widget shows 9 rows plus `+4 more · tl ls`, because there are 13 items including `~/tl-e2e/a`.

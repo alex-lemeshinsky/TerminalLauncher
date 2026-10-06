@@ -59,8 +59,14 @@ private func makeHandler(
     let outcome = await handler.handleOpen(path: "/Users/alex/old/thing")
     #expect(outcome == .folderMissing(path: "/Users/alex/old/thing"))
     #expect(outcome.alertMessage(home: "/Users/alex")
-        == "~/old/thing no longer exists. Remove it with tl rm \"~/old/thing\".")
+        == "~/old/thing no longer exists. Remove it with tl rm '~/old/thing'.")
     #expect(await opener.opened.isEmpty)
+}
+
+@Test func missingFolderAlertQuotesShellMetacharacters() {
+    let outcome = OpenOutcome.folderMissing(path: "/Users/alex/it's $HOME \"x\"")
+    #expect(outcome.alertMessage(home: "/Users/alex")
+        == "~/it's $HOME \"x\" no longer exists. Remove it with tl rm '~/it'\\''s $HOME \"x\"'.")
 }
 
 @Test func fileInsteadOfFolderAlerts() async throws {

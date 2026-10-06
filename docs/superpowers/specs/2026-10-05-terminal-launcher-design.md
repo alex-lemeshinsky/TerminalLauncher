@@ -193,7 +193,9 @@ The app then handles each action:
      This stops any web page or app from using a `tlaunch://` link to open
      Terminal windows at arbitrary paths.
   2. If `p` no longer exists or isn't a folder, show an alert:
-     *"~/X no longer exists. Remove it with `tl rm ~/X`."*
+     *"~/X no longer exists. Remove it with tl rm '~/X'."* The path in the
+     command is wrapped in single quotes, with each `'` inside it written as
+     `'\''`, so it can be pasted into a shell as-is.
   3. Otherwise, find Terminal with
      `NSWorkspace.urlForApplication(withBundleIdentifier: "com.apple.Terminal")`
      and call `NSWorkspace.open([folderURL], withApplicationAt:

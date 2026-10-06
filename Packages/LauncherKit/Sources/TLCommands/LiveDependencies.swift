@@ -24,7 +24,10 @@ extension Commands {
             makeStore: { () throws(PathStoreError) -> PathStore in try PathStore.appGroup() },
             reloader: WorkspaceReloader(),
             folderStatus: { FolderStatus.of($0) },
-            cwd: FileManager.default.currentDirectoryPath,
+            cwd: logicalCwd(
+                pwd: ProcessInfo.processInfo.environment["PWD"],
+                physical: FileManager.default.currentDirectoryPath,
+                sameFile: sameFileOnDisk),
             home: PathDisplay.realHome,
             now: { Date() }
         )
@@ -39,4 +42,22 @@ extension CommandResult {
             FileHandle.standardError.write(Data((line + "\n").utf8))
         }
     }
+}
+
+/// The current directory the way the shell shows it (POSIX `pwd -L`): `$PWD` when it is an absolute path
+/// without `.` or `..` components that names the same directory as `physical`, else `physical`.
+/// `FileManager.currentDirectoryPath` is getcwd(), which resolves symlinks.
+public func logicalCwd(pwd: String?, physical: String, sameFile: (String, String) -> Bool) -> String {
+    guard let pwd, pwd.hasPrefix("/") else { return physical }
+    let components = pwd.split(separator: "/", omittingEmptySubsequences: true)
+    guard !components.contains(".") && !components.contains("..") else { return physical }
+    return sameFile(pwd, physical) ? pwd : physical
+}
+
+/// True when both paths exist and, after following symlinks, are the same file (same device and inode).
+public func sameFileOnDisk(_ a: String, _ b: String) -> Bool {
+    var first = stat()
+    var second = stat()
+    guard stat(a, &first) == 0, stat(b, &second) == 0 else { return false }
+    return first.st_dev == second.st_dev && first.st_ino == second.st_ino
 }

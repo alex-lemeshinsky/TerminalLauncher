@@ -140,7 +140,7 @@ private let reloadFailedLine =
         let result = await h.commands.add(".")
         #expect(result == CommandResult(
             stdout: [],
-            stderr: ["Error: can't access App Group container A5STTR22DU.com.alex.TerminalLauncher"],
+            stderr: ["Error: can't access App Group container \(PathStore.appGroupID)"],
             exitCode: 1))
         #expect(await h.reloadCalls == 0)
     }
