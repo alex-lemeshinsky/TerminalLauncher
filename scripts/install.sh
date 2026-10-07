@@ -16,9 +16,10 @@ xcodegen generate
 
 # 3. Release build. A fresh build number on every install makes chronod re-read the widget's
 #    descriptor (e.g. its supported sizes); with an unchanged number it keeps the cached one.
+#    Unix seconds fit the 32-bit field LaunchServices parses; a longer number breaks rendering.
 xcodebuild -project TerminalLauncher.xcodeproj -scheme TerminalLauncher \
   -configuration Release -derivedDataPath build -allowProvisioningUpdates \
-  CURRENT_PROJECT_VERSION="$(date +%Y%m%d%H%M%S)" build
+  CURRENT_PROJECT_VERSION="$(date +%s)" build
 
 BUILT="build/Build/Products/Release/TerminalLauncher.app"
 if [[ ! -d "$BUILT" ]]; then
@@ -28,6 +29,9 @@ fi
 
 # 4. Stop the running copy so the new build handles tlaunch://
 pkill -x TerminalLauncher || true
+# A widget process left over from the old copy renders with the old bundle version, which
+# chronod rejects ("Bundle version did not match"), so the widget stays a placeholder.
+pkill -x PathsWidget || true
 
 # 5. Replace the installed copy
 mkdir -p "$DEST"
