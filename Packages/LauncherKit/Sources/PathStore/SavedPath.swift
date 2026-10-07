@@ -52,8 +52,8 @@ extension Array where Element == SavedPath {
 }
 
 public enum WidgetLayout {
-    public static let largeCapacity = 10
-    public static let mediumCapacity = 4
+    /// The most rows any widget draws. Each size shows as many rows as fit its height, up to this.
+    public static let maxRows = 10
 
     /// Rows to draw in a widget with `capacity` rows. When the list doesn't fit, the last row is
     /// reserved for a "+N more" line, so only `capacity - 1` paths are shown.

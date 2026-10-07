@@ -159,9 +159,10 @@ are injected, so tests never touch the real App Group or the app.
 
 - Families: `.systemMedium` and `.systemLarge`. `StaticConfiguration`, with no
   per-widget settings.
-- Capacity: the large size shows up to 10 rows and the medium size up to 4. If
-  there are more items than that, the last row becomes **`+N more · tl ls`**,
-  so the large size shows 9 items plus that row, and the medium size 3 plus it.
+- Capacity: each size shows as many rows as fit its height, up to 10
+  (`ViewThatFits` tries 10 rows, then 9, and so on). If there are more items
+  than that, the last row becomes **`+N more · tl ls`**, so the large size
+  shows 9 items plus that row, and the medium size as many as fit plus it.
 - Each row is one SwiftUI `Link` to `tlaunch://open?path=<percent-encoded>`.
   It contains:
   - the SF Symbol `folder`,

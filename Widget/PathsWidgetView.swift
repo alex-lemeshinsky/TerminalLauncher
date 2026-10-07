@@ -3,12 +3,7 @@ import SwiftUI
 import WidgetKit
 
 struct PathsWidgetView: View {
-    @Environment(\.widgetFamily) private var family
     let entry: PathsEntry
-
-    private var capacity: Int {
-        family == .systemLarge ? WidgetLayout.largeCapacity : WidgetLayout.mediumCapacity
-    }
 
     var body: some View {
         content
@@ -24,18 +19,27 @@ struct PathsWidgetView: View {
         case let .items(items) where items.isEmpty:
             message("No folders yet: run `tl .` in a folder")
         case let .items(items):
-            let rows = WidgetLayout.rows(for: items, capacity: capacity)
-            VStack(alignment: .leading, spacing: 6) {
-                ForEach(rows.shown, id: \.path) { item in
-                    Link(destination: LaunchURL.open(path: item.path)) {
-                        PathRow(path: item.path)
-                    }
+            // Try the most rows first and keep the first layout that fits the widget's height,
+            // so each size shows as many folders as it has room for.
+            ViewThatFits(in: .vertical) {
+                ForEach((1...min(items.count, WidgetLayout.maxRows)).reversed(), id: \.self) { capacity in
+                    rowList(WidgetLayout.rows(for: items, capacity: capacity))
                 }
-                if rows.moreCount > 0 {
-                    Text("+\(rows.moreCount) more · tl ls")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private func rowList(_ rows: (shown: [SavedPath], moreCount: Int)) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            ForEach(rows.shown, id: \.path) { item in
+                Link(destination: LaunchURL.open(path: item.path)) {
+                    PathRow(path: item.path)
                 }
+            }
+            if rows.moreCount > 0 {
+                Text("+\(rows.moreCount) more · tl ls")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
             }
         }
     }

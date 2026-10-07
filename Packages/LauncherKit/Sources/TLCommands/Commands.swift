@@ -68,9 +68,9 @@ public struct Commands: Sendable {
         var result = CommandResult(stdout: [
             updated.alreadyPresent ? "\(shown) already saved, moved to top" : "Added \(shown)",
         ])
-        let hidden = WidgetLayout.rows(for: updated.items, capacity: WidgetLayout.largeCapacity).moreCount
+        let hidden = WidgetLayout.rows(for: updated.items, capacity: WidgetLayout.maxRows).moreCount
         if hidden > 0 {
-            result.stdout.append("Note: the widget shows up to \(WidgetLayout.largeCapacity) folders; \(hidden) are hidden.")
+            result.stdout.append("Note: the widget shows up to \(WidgetLayout.maxRows) folders; \(hidden) are hidden.")
         }
         await reload(into: &result)
         return result

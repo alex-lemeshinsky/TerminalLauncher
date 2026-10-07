@@ -75,8 +75,8 @@ Notes:
 
 ### The widget
 
-- **Large** shows up to 10 folders and **medium** shows up to 4. If you have more,
-  the last row reads `+N more · tl ls`.
+- Each size shows as many folders as fit its height, up to 10. If
+  you have more, the last row reads `+N more · tl ls`.
 - Each row shows the folder name and its parent folder, e.g. `api  ~/Projects`.
 - **Clicking a row** opens a new Terminal window in that folder.
 - **Clicking a deleted folder** shows an alert with the `tl rm` command that
