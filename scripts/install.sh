@@ -14,9 +14,11 @@ cd "${0:A:h}/.."
 # 2. Generate the Xcode project
 xcodegen generate
 
-# 3. Release build
+# 3. Release build. A fresh build number on every install makes chronod re-read the widget's
+#    descriptor (e.g. its supported sizes); with an unchanged number it keeps the cached one.
 xcodebuild -project TerminalLauncher.xcodeproj -scheme TerminalLauncher \
-  -configuration Release -derivedDataPath build -allowProvisioningUpdates build
+  -configuration Release -derivedDataPath build -allowProvisioningUpdates \
+  CURRENT_PROJECT_VERSION="$(date +%Y%m%d%H%M%S)" build
 
 BUILT="build/Build/Products/Release/TerminalLauncher.app"
 if [[ ! -d "$BUILT" ]]; then
