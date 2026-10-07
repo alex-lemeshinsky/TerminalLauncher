@@ -3,7 +3,10 @@ import SwiftUI
 import WidgetKit
 
 struct PathsWidgetView: View {
+    @Environment(\.widgetFamily) private var family
     let entry: PathsEntry
+
+    private var isSmall: Bool { family == .systemSmall }
 
     var body: some View {
         content
@@ -33,11 +36,11 @@ struct PathsWidgetView: View {
         VStack(alignment: .leading, spacing: 6) {
             ForEach(rows.shown, id: \.path) { item in
                 Link(destination: LaunchURL.open(path: item.path)) {
-                    PathRow(path: item.path)
+                    PathRow(path: item.path, showsParent: !isSmall)
                 }
             }
             if rows.moreCount > 0 {
-                Text("+\(rows.moreCount) more · tl ls")
+                Text(isSmall ? "+\(rows.moreCount) more" : "+\(rows.moreCount) more · tl ls")
                     .font(.callout)
                     .foregroundStyle(.secondary)
             }
@@ -64,6 +67,14 @@ private let previewEntries: [PathsEntry] = [
     PathsEntry(date: .now, state: .items(sampleItems(12))),
     PathsEntry(date: .now, state: .unreadable),
 ]
+
+#Preview(as: .systemSmall) {
+    PathsWidget()
+} timeline: {
+    for entry in previewEntries {
+        entry
+    }
+}
 
 #Preview(as: .systemLarge) {
     PathsWidget()

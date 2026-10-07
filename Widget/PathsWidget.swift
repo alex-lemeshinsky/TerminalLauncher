@@ -56,6 +56,6 @@ struct PathsWidget: Widget {
         }
         .configurationDisplayName("Terminal Folders")
         .description("Open Terminal in a saved folder.")
-        .supportedFamilies([.systemMedium, .systemLarge])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }

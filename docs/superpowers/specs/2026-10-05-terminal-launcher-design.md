@@ -157,8 +157,9 @@ are injected, so tests never touch the real App Group or the app.
 
 ## 5. Widget
 
-- Families: `.systemMedium` and `.systemLarge`. `StaticConfiguration`, with no
-  per-widget settings.
+- Families: `.systemSmall`, `.systemMedium` and `.systemLarge`. The small size
+  shows only folder names (no parent folder) and its overflow row is `+N more`.
+  `StaticConfiguration`, with no per-widget settings.
 - Capacity: each size shows as many rows as fit its height, up to 10
   (`ViewThatFits` tries 10 rows, then 9, and so on). If there are more items
   than that, the last row becomes **`+N more · tl ls`**, so the large size
