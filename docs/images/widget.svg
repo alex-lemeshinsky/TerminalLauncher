@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="760" height="300" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif">
+  <style>
+    .term    { fill: #1e1e24; }
+    .bar     { fill: #2c2c34; }
+    .tx      { fill: #e6e6ea; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 15px; }
+    .prompt  { fill: #7ee787; }
+    .dim     { fill: #8b8b96; }
+    .widget  { fill: #f2f2f5; stroke: #d9d9de; }
+    .name    { fill: #1c1c1e; font-size: 15px; font-weight: 600; }
+    .parent  { fill: #8a8a8e; font-size: 15px; }
+    .icon    { fill: none; stroke: #8a8a8e; stroke-width: 1.5; stroke-linejoin: round; }
+    .arrow   { stroke: #8a8a8e; stroke-width: 2; fill: none; }
+    .head    { fill: #8a8a8e; }
+    @media (prefers-color-scheme: dark) {
+      .widget { fill: #2a2a2e; stroke: #3a3a40; }
+      .name   { fill: #f2f2f7; }
+      .parent { fill: #98989f; }
+      .icon   { stroke: #98989f; }
+    }
+  </style>
+
+  <!-- Terminal -->
+  <rect class="term" x="10" y="40" width="330" height="220" rx="12"/>
+  <path class="bar" d="M22 40h306a12 12 0 0 1 12 12v18H10V52a12 12 0 0 1 12-12z"/>
+  <circle cx="30" cy="55" r="6" fill="#ff5f57"/>
+  <circle cx="50" cy="55" r="6" fill="#febc2e"/>
+  <circle cx="70" cy="55" r="6" fill="#28c840"/>
+  <text class="tx" x="28" y="102"><tspan class="prompt">~</tspan> % cd ~/Projects/api</text>
+  <text class="tx" x="28" y="130"><tspan class="prompt">api</tspan> % tl .</text>
+  <text class="tx dim" x="28" y="158">Added ~/Projects/api</text>
+  <text class="tx" x="28" y="186"><tspan class="prompt">api</tspan> % tl ls</text>
+  <text class="tx dim" x="28" y="214"> 1  ~/Projects/api</text>
+  <text class="tx dim" x="28" y="238"> 2  ~/Projects/site</text>
+
+  <!-- Arrow -->
+  <path class="arrow" d="M352 150h40"/>
+  <path class="head" d="M392 143l12 7-12 7z"/>
+
+  <!-- Medium widget -->
+  <rect class="widget" x="416" y="40" width="334" height="220" rx="22"/>
+  <g transform="translate(436 62)">
+    <g>
+      <path class="icon" d="M1 4.5h6l2 2h8v9H1z"/>
+      <text class="name" x="26" y="15">api</text>
+      <text class="parent" x="294" y="15" text-anchor="end">~/Projects</text>
+    </g>
+    <g transform="translate(0 30)">
+      <path class="icon" d="M1 4.5h6l2 2h8v9H1z"/>
+      <text class="name" x="26" y="15">site</text>
+      <text class="parent" x="294" y="15" text-anchor="end">~/Projects</text>
+    </g>
+    <g transform="translate(0 60)">
+      <path class="icon" d="M1 4.5h6l2 2h8v9H1z"/>
+      <text class="name" x="26" y="15">dotfiles</text>
+      <text class="parent" x="294" y="15" text-anchor="end">~</text>
+    </g>
+    <g transform="translate(0 90)">
+      <path class="icon" d="M1 4.5h6l2 2h8v9H1z"/>
+      <text class="name" x="26" y="15">TerminalLauncher</text>
+      <text class="parent" x="294" y="15" text-anchor="end">~/Documents/Swift</text>
+    </g>
+    <text class="parent" x="0" y="140">+3 more · tl ls</text>
+  </g>
+</svg>
