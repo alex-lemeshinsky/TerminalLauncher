@@ -45,7 +45,7 @@ For Xcode development, open the generated project. Widget previews live in `Widg
 
 ## Coding Style & Naming Conventions
 
-Follow existing Swift style: four-space indentation, `UpperCamelCase` types, and `lowerCamelCase` methods and properties. Name files after their principal type. Keep platform targets thin; put testable behavior in `LauncherKit` and inject side effects through `Commands` dependencies. No formatter or linter is configured.
+Follow existing Swift style: four-space indentation, `UpperCamelCase` types, and `lowerCamelCase` methods and properties. Both `project.yml` and `Package.swift` use Swift 6 language mode (`SWIFT_VERSION: "6.0"`) with strict concurrency (`Sendable` types/closures, `@MainActor` on `AppDelegate`) and typed throws (`throws(PathStoreError)` in `PathStore`). Name files after their principal type. Keep platform targets thin; put testable behavior in `LauncherKit` and inject side effects through `Commands` dependencies. No formatter or linter is configured.
 
 ## Testing Guidelines
 
@@ -61,11 +61,12 @@ Follow history: `feat:`, `fix:`, `docs:`, or `chore:`, with optional scopes such
 - **`tl` is the only writer** of `paths.json` in the App Group container (`A5STTR22DU.com.alex.TerminalLauncher`). Each write is atomic. After a change, the CLI opens `tlaunch://reload` in the background without activating the app.
 - **`TerminalLauncher.app`** handles two URLs:
   - `tlaunch://reload` calls `WidgetCenter.reloadAllTimelines()`.
-  - `tlaunch://open?path=…` opens Terminal. `OpenRequestHandler` only opens a path that **exactly** matches a stored path, preventing untrusted callers (e.g., web pages) from opening Terminal at arbitrary locations via the URL scheme. Keep that check.
-- **`PathsWidget`** reads `paths.json` and renders each row as a `tlaunch://open` link across `.systemSmall`, `.systemMedium`, and `.systemLarge`, refreshing every 30 minutes as a fallback.
+  - `tlaunch://open?path=…` opens Terminal. `OpenRequestHandler` only opens a path that **exactly** matches a stored path, preventing untrusted callers (e.g., web pages) from opening Terminal at arbitrary locations via the URL scheme. Keep that check. Rejected (`.notInList`) and `.listUnreadable` outcomes fail silently (logged via `OSLog` only), whereas `.folderMissing` and `.failed` activate the app and display a modal `NSAlert` (with a shell-escaped `tl rm '...'` hint when a folder is missing).
+- **`PathsWidget`** reads `paths.json` and renders each row as a `tlaunch://open` link across `.systemSmall`, `.systemMedium`, and `.systemLarge`, refreshing every 30 minutes as a fallback. Each size fits as many rows as its height allows up to `WidgetLayout.maxRows` (`10`) using `ViewThatFits`; `.systemSmall` hides the abbreviated parent path (`showsParent: false`) and shortens the overflow footer to `+N more` (instead of `+N more · tl ls`).
 
 ### Invariants
 - Stored paths are canonical: absolute and normalized as strings, with symlinks **not** resolved. `PathCanonicalizer` never touches the file system. For `tl .`, the cwd is the shell's logical `$PWD` (`logicalCwd`), so symlinked folders stay the way the user sees them.
+- Always use `PathDisplay.realHome` (which reads `getpwuid(getuid())`) or the injected `home` dependency rather than `NSHomeDirectory()` or `FileManager.default.homeDirectoryForCurrentUser` when abbreviating `~`, because standard home-directory APIs return the sandbox container path inside `PathsWidget`.
 - A file that can't be read or has an unsupported version is never overwritten. Commands report the error, and the widget shows an "unreadable" state.
 - `paths.json` has a `version` field (currently `1`). `PathStore.load()` rejects any other version.
 - Command names win over folder names in `tl`. A folder called `ls` must be written `tl ./ls`. In `tl rm`, an all-digit argument is always an item number.
