@@ -1,0 +1,16 @@
+Use case: productivity-visual
+Asset type: final closing slide for a TerminalLauncher pitch deck, a finished flat 16:9 landscape slide, 1920x1080 or higher.
+Create a polished, minimal premium macOS developer-tool closing slide. TerminalLauncher puts saved working folders in a desktop widget; one click opens Terminal in that folder.
+Input images: Image 1 is the actual TerminalLauncher app icon, retain its recognizable blue folder with dark terminal >_ glyph. Image 2 is a functional LinkedIn QR code. Image 3 is a functional GitHub repository QR code. CRITICAL: reproduce both QR images as exact pixel-faithful inserts, never invent or redraw their modules. They must remain functional and sharply readable with their full white quiet zones; keep them flat, square, without perspective, distortion, stylization, or logos over them.
+Design: dark midnight charcoal background, restrained electric-blue ambient glow behind the icon, exceptionally clean Swiss/Apple presentation typography, lots of breathing room. Use an elegant asymmetrical two-column layout: left about 57 percent for oversized message and identity; right about 43 percent for the blue app icon above and a horizontal pair of equal white QR tiles below. Keep both QR tiles large, about 300px square at 1920 width, with clean black modules on white. The app icon is a supporting hero element; QR tiles are legible action destinations. Fine subtle separator line above the footer.
+Exact text only:
+Top left small brand: "TerminalLauncher"
+Large headline in white, two lines: "Thank you."
+Below headline in muted cool white: "Your folders. One click. Terminal."
+Lower left presenter name: "Oleksii Lemeshinskyi"
+Small line beneath name: "Let's connect."
+Under Image 2 QR: "LinkedIn", then smaller "Connect with me"
+Under Image 3 QR: "GitHub", then smaller "Explore the code"
+Small footer: "Built for macOS."
+Do not print any literal URLs anywhere; all URLs are represented by the supplied QR codes. Image 2 encodes https://www.linkedin.com/in/oleksii-lemeshinskyi/ and Image 3 encodes https://github.com/alex-lemeshinsky/TerminalLauncher.
+Constraints: visually refined closing pitch slide, no laptop mockup, no slide frame, no extra text, no metrics, no stock photography, no people, no fake chart, no watermark. The finished slide itself fills the entire image. Strong clear hierarchy, calm and confident. Ensure the exact QR patterns from references are preserved.
