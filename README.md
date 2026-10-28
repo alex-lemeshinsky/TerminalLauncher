@@ -186,6 +186,7 @@ Packages/LauncherKit/        All the logic, as a local Swift package
   Sources/TLCommands/        tl commands and argument parsing
   Tests/                     Swift Testing suites
 scripts/install.sh           Build and install
+docs/videos/                Promo videos (horizontal and vertical variants)
 docs/superpowers/            Design spec, implementation plan, spike findings
 ```
 
