@@ -14,6 +14,10 @@
 
 <img src="docs/images/widget.svg" width="720" alt="Running tl . in a terminal adds the folder to a desktop widget listing api, site, dotfiles and TerminalLauncher">
 
+https://github.com/user-attachments/assets/bc8ba766-78a5-4e67-a2c3-728c37367965
+
+<sub>Horizontal promo · Claude Opus 5.5 · 1920×1080</sub>
+
 </div>
 
 ---
